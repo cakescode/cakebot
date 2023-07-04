@@ -2,7 +2,6 @@ import discord
 from discord import Member
 from discord.ext import commands
 from discord.ext.commands import Bot
-from __main__ import bot
 
 class Fun(commands.Cog):
 	def __init__(self, bot):
@@ -24,15 +23,12 @@ class Fun(commands.Cog):
 
 # ----------------------------------- #
 
-	@bot.event
-	async def on_command_error(ctx, error):
-		channel = bot.get_channel(1046099711188279389)
-		await channel.send(ctx.command) # I am trying to send the command with error here
-		await channel.send(error)
-		raise error
-
-
-
+	# @bot.event
+	# async def on_command_error(ctx, error):
+	# 	channel = bot.get_channel(1046099711188279389)
+	# 	await channel.send(ctx.command) # I am trying to send the command with error here
+	# 	await channel.send(error)
+	# 	raise error
 
 def setup(bot):
 	bot.add_cog(Fun(bot))
