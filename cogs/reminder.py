@@ -1,5 +1,5 @@
 from discord.ext import tasks, commands
-import datetime
+import datetime, asyncio
 from __main__ import bot
 
 class reminder(commands.Cog):
@@ -20,9 +20,10 @@ class reminder(commands.Cog):
 
 	@bot.event
 	async def coding_reminder(self, ctx):
-		await ctx.send('it is 15:57')
-	
-	
+		while True:
+			if '17:00:00' <= datetime.datetime.now() <= '17:10:00':
+				await ctx.send('time test')
+				await asyncio.sleep(600)
 
 def setup(bot):
 	bot.add_cog(reminder(bot))

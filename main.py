@@ -19,9 +19,9 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or('>'), intents=disco
 # from the Cogs folder. Cogs are just files
 # that hold our commands.
 def load_cogs():
-    for f in os.listdir("./cogs"):
-            if f.endswith(".py"):
-                bot.load_extension("cogs." + f[:-3])
+    for file in os.listdir('./cogs'):
+            if file.endswith('.py') and not file.startswith('_'):
+                bot.load_extension('cogs.' + file[:-3])
 
 
 # In this function, we use an argument to load
@@ -36,7 +36,7 @@ def load_token_and_run():
         print('ERROR: You must include a bot token.')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     load_cogs()
     load_token_and_run()
 
