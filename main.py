@@ -9,8 +9,8 @@ pip install py-cord
 import os, sys, discord
 from discord.ext import commands
 
-# This sets the prefix to use for commands. Here, we use '>'. 
-bot = commands.Bot(command_prefix = '>', intents=discord.Intents.all())
+# This sets the prefix to use for commands. 
+bot = commands.Bot(command_prefix = '/', intents=discord.Intents.all())
 
 # In this function, we load all the files from the Cogs folder.
 # Cogs are just files that hold our commands.

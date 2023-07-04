@@ -13,12 +13,12 @@ class Fun(commands.Cog):
 	"""
 	Bot commands can go here. Theses are all the things your bot "does"
 	"""
-	@commands.command()
+	@commands.slash_command()
 	async def hello(self, ctx):
 		await ctx.respond("Oh, Hi there.")
 
 
-	@commands.command()
+	@commands.slash_command()
 	async def echo(self, ctx, message: discord.Option(str)):
 		await ctx.respond(f"You said '{message.meantion}'")
 
