@@ -9,10 +9,10 @@ pip install py-cord
 import os
 import sys
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 # This sets the prefix to use for commands. Here, we use a Slash. 
-bot = commands.Bot(command_prefix = '>', intents=discord.Intents.all())
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('>'), intents=discord.Intents.all())
 
 
 # In this function, we load all the files
