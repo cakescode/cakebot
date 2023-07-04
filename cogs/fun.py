@@ -8,24 +8,21 @@ class Fun(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-
-
-
+# ----------------------------------- #
 
 	"""
 	Bot commands can go here. Theses are all the things your bot "does"
 	"""
-	@commands.slash_command()
+	@commands.command()
 	async def hello(self, ctx):
 		await ctx.respond("Oh, Hi there.")
 
 
-	@commands.slash_command()
+	@commands.command()
 	async def echo(self, ctx, message: discord.Option(str)):
 		await ctx.respond(f"You said '{message.meantion}'")
 
-
-
+# ----------------------------------- #
 
 	@bot.event
 	async def on_command_error(ctx, error):
