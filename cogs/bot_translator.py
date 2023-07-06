@@ -1,22 +1,10 @@
 from discord.ext import commands
 from translate import Translator
-import translators
+# import translators
 
 class bot_translator(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-
-	@commands.command()
-	async def japanese(self, ctx, message):
-		try:
-			english_translation = translators.translate_text(message, from_language='en', to_language='ja')
-			await ctx.send(english_translation)
-		except TypeError as te:
-			await ctx.send(f'TypeError: {te}')
-		except NameError as ne:
-			await ctx.send(f'NameError: {ne}')
-		except AttributeError as ae:
-			await ctx.send(f'AttributeError: {ae}')
 
 	@commands.command()
 	async def en(self, ctx, message):
@@ -43,6 +31,18 @@ class bot_translator(commands.Cog):
 			print(ne)
 		finally:
 			await ctx.send(ja_translation)
+
+	# @commands.command()
+	# async def japanese(self, ctx, message):
+	# 	try:
+	# 		english_translation = translators.translate_text(message, from_language='en', to_language='ja')
+	# 		await ctx.send(english_translation)
+	# 	except TypeError as te:
+	# 		await ctx.send(f'TypeError: {te}')
+	# 	except NameError as ne:
+	# 		await ctx.send(f'NameError: {ne}')
+	# 	except AttributeError as ae:
+	# 		await ctx.send(f'AttributeError: {ae}')
 
 def setup(bot):
 	bot.add_cog(bot_translator(bot))

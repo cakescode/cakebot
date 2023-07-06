@@ -5,9 +5,9 @@ class Fun(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	@commands.slash_command()
-	async def hello(self, ctx):
-		await ctx.respond("Oh, Hi there.")
+	# @commands.slash_command()
+	# async def hello(self, ctx):
+	# 	await ctx.respond("こんにしは『hello』!")
 
 	@commands.Cog.listener()
 	async def on_message(self, message):

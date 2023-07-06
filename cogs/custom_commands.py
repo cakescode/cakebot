@@ -6,7 +6,7 @@ class custom(commands.Cog):
 
 	@commands.slash_command()
 	async def hello(self, ctx):
-		await ctx.respond("こんにちは『hello』")
+		await ctx.respond("こんにちは『hello』!")
 
 def setup(bot):
 	bot.add_cog(custom(bot))
