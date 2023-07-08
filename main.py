@@ -12,7 +12,7 @@ import sys
 import discord
 from discord.ext import commands, tasks
 
-# This sets the prefix to use for commands. Here, we use a Slash. 
+# This sets the prefix to use for commands. 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('>'),
                    intents=discord.Intents.all())
 
