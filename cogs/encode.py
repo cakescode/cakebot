@@ -11,10 +11,12 @@ class encoder(commands.Cog):
 	@commands.slash_command()
 	@commands.has_any_role(allowed_role)
 	async def encode(self, ctx, message):
+		worked = True
 		encoded = ''
 		encoded_index = []
 		key_one = ''
 		key_two = ''
+		message = message.upper() # make message uppercase
 		# convert each letter into a number and apply each shift individually
 		for char in message:
 			if char in encoder.alp:
@@ -31,10 +33,12 @@ class encoder(commands.Cog):
 				pass
 			else: # any other characters besides letters or spaces will result in following error
 				await ctx.respond(f'Error: Character \'{char}\' is not allowed in the input')
+				worked = False
 				break
 		encoded_index = ' '.join(encoded_index) # convert to string and sep with ' '
 		output = f'{key_one}{key_two}{encoded_index}'
-		await ctx.respond(f'```{output}```')
+		if worked:
+			await ctx.respond(f'```{output}```')
 
 def setup(bot):
 	bot.add_cog(encoder(bot))
