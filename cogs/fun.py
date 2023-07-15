@@ -17,6 +17,10 @@ class Fun(commands.Cog):
 		if message.content.startswith('!say'):
 			await message.channel.send(f'{message.content.replace("!say", "")}')
 
+		message_str = str(message).lower()
+		if message_str == 'uwu':
+			await message.channel.send('https://media.tenor.com/-7xFCtnyUCcAAAAM/uwu-ts-team-uwu.gif')
+
 
 def setup(bot):
 	bot.add_cog(Fun(bot))
