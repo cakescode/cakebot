@@ -1,13 +1,19 @@
 from discord.ext import commands
-
+import random
+import datetime
 
 class Fun(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	# @commands.slash_command()
-	# async def hello(self, ctx):
-	# 	await ctx.respond("こんにしは『hello』!")
+	@commands.slash_command()
+	async def hello(self, ctx):
+		if 10 <= datetime.datetime.now().hour < 19:
+			await ctx.respond("こんにしは『good day』!")
+		elif 19 <= datetime.datetime.now().hour <= 24:
+			await ctx.respond("こんばんは『good evening』!")
+		else:
+			await ctx.respond("おはよう『good morning』!")
 
 	@commands.Cog.listener()
 	async def on_message(self, message):
@@ -17,10 +23,8 @@ class Fun(commands.Cog):
 		if message.content.startswith('!say'):
 			await message.channel.send(f'{message.content.replace("!say", "")}')
 
-		message_str = str(message).lower()
-		if message_str == 'uwu':
-			await message.channel.send('https://media.tenor.com/-7xFCtnyUCcAAAAM/uwu-ts-team-uwu.gif')
-
+		if message.content.startswith('thanks'):
+			await message.channel.send(f'ur welcome {message.content.pop("thanks ")}')
 
 def setup(bot):
 	bot.add_cog(Fun(bot))
