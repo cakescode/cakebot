@@ -16,14 +16,15 @@ class reminder(commands.Cog):
 		time_one = datetime.datetime(year=current_year, 
 			       month=current_month,
 				   day=current_day,
-				   hour=21)
+				   hour=18)
 		time_two = datetime.datetime(year=current_year, 
 			       month=current_month,
 				   day=current_day,
-				   hour=22)
+				   hour=18,
+				   minute=10)
 		if time_one <= datetime.datetime.now() <= time_two:
-			await reminder_channel.send('time test')
-			await asyncio.sleep(6000)
+			await reminder_channel.send('<@213410080979156993> time to code!')
+			await asyncio.sleep(600)
 
 def setup(bot):
 	bot.add_cog(reminder(bot))
