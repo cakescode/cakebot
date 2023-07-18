@@ -24,7 +24,7 @@ class Fun(commands.Cog):
 			await message.channel.send(f'{message.content.replace("!say", "")}')
 
 		if message.content.startswith('thanks'):
-			await message.channel.send(f'ur welcome {message.content.pop("thanks ")}')
+			await message.channel.send(message.content.replace("thanks ", "ur welcome"))
 
 def setup(bot):
 	bot.add_cog(Fun(bot))

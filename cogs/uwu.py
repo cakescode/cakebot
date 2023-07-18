@@ -51,13 +51,9 @@ class uwu(commands.Cog):
 			while uwu.gif_choice in uwu.gif_previous:
 				if len(uwu.gif_previous) == len(uwu.gifs) - 1:
 					uwu.gif_previous = []
-					print('UwU.gif_previous has been reset!')
 				uwu.gif_choice = random.choice(uwu.gifs)
 				uwu.last_msg = time.time()
 				step += 1
-			print(f'steps it took to get non-duplicate: {step}')
-			print(uwu.gif_choice)
-			print(f'size of gif_previous: {len(uwu.gif_previous) + 1}')
 			uwu.gif_previous.append(uwu.gif_choice)
 			await message.channel.send(uwu.gif_choice)
 			uwu.warned = False
