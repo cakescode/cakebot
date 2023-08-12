@@ -11,9 +11,11 @@ class testing(commands.Cog):
 
     @commands.slash_command()
     async def emojis(self, ctx):
-        for emoji in ctx.guild.emojis:
-            print(f'<:{emoji.name}:{emoji.id}>')
+        emoji_list = ''
         await ctx.respond("printing emoji list...")
+        for emoji in ctx.guild.emojis:
+            emoji_list += f'<:{emoji.name}:{emoji.id}>'
+        await ctx.send(emoji_list)
 
 
 def setup(bot):

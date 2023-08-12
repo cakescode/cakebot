@@ -9,7 +9,7 @@ class Fun(commands.Cog):
 	@commands.slash_command()
 	async def hello(self, ctx):
 		if 10 <= datetime.datetime.now().hour < 19:
-			await ctx.respond("こんにしは『good day』!")
+			await ctx.respond("こんにちは『good day』!")
 		elif 19 <= datetime.datetime.now().hour <= 24:
 			await ctx.respond("こんばんは『good evening』!")
 		else:
@@ -24,7 +24,8 @@ class Fun(commands.Cog):
 			await message.channel.send(f'{message.content.replace("!say", "")}')
 
 		if message.content.startswith('thanks'):
-			await message.channel.send(message.content.replace("thanks ", "ur welcome"))
+			if message.content != 'thanks':
+				await message.channel.send(message.content.replace("thanks ", "ur welcome "))
 
 def setup(bot):
 	bot.add_cog(Fun(bot))
