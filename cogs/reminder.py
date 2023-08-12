@@ -13,18 +13,17 @@ class reminder(commands.Cog):
 		current_year = datetime.datetime.now().year
 		current_month = datetime.datetime.now().month
 		current_day = datetime.datetime.now().day
-		time_one = datetime.datetime(year=current_year, 
+		time_start = datetime.datetime(year=current_year, 
 			       month=current_month,
 				   day=current_day,
 				   hour=18)
-		time_two = datetime.datetime(year=current_year, 
+		time_stop = datetime.datetime(year=current_year, 
 			       month=current_month,
 				   day=current_day,
-				   hour=18,
-				   minute=10)
-		if time_one <= datetime.datetime.now() <= time_two:
-			await reminder_channel.send('<@213410080979156993> time to code!')
-			await asyncio.sleep(600)
+				   hour=19)
+		if time_start <= datetime.datetime.now() <= time_stop:
+			await reminder_channel.send('<@213410080979156993> time to study!')
+			await asyncio.sleep(3600)
 
 def setup(bot):
 	bot.add_cog(reminder(bot))
