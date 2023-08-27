@@ -6,12 +6,11 @@ class logs(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-	welcome_channel = bot.get_channel(1080972390361731166)
-
 	@bot.event
 	async def on_member_join(self):
+		welcome_channel = bot.get_channel(1080972390361731166)
 		embed = discord.Embed(title="welcome", description="hello this is a test", color=0xffffff)
-		await logs.welcome_channel.send(embed=embed)
+		await welcome_channel.send(embed=embed)
 
 	# log_channel = 1130165249912360980
 	# guild_id = 1080972389808091136
