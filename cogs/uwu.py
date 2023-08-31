@@ -41,7 +41,7 @@ class uwu(commands.Cog):
 	gif_previous = []
 	gif_choice = random.choice(gifs)
 	last_msg = time.time()
-	time_between = anti_spam
+	time_between = 0
 	warned = False
 
 	@commands.Cog.listener()

@@ -1,5 +1,6 @@
 from discord.ext import commands
 from translate import Translator
+# from __main__ import prefix
 import json
 # import translators
 
@@ -14,7 +15,7 @@ class bot_translator(commands.Cog):
 	@commands.Cog.listener()
 	async def on_message(self, message):
 		# if message wasnt sent by a bot
-		if not message.author.bot:
+		if not message.author.bot and not message.content.startswith('>'):
 			# check each character in message
 			for char in message.content:
 				# if character is a kanji that is in the json
