@@ -19,7 +19,7 @@ class Waifu(commands.Cog):
 		print(response, data, sep='\n') # debug
 		if response.status_code == 200:
 			try:
-				await ctx.respond(embed=discord.Embed().set_image(url=data))
+				await ctx.respond(embed=discord.Embed().set_image(url=data['images'][0]['url']))
 			except Exception as e:
 				print(e)
 				await traceback(ctx, e)
