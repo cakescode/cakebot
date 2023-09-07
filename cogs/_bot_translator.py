@@ -1,3 +1,4 @@
+import discord.ext
 from discord.ext import commands
 from translate import Translator
 # from __main__ import prefix
@@ -28,7 +29,7 @@ class bot_translator(commands.Cog):
 					finally:
 						# send the resulting translation to the channel the msg was sent to
 						await message.channel.send(
-							f'auto-translation: {auto_ts.translate(message.content)}')
+							embed=discord.Embed(title='auto-translation:', description=f'{auto_ts.translate(message.content)}'))
 					# the break is so the first kanji it sees in the message,
 					# it stops scanning and starts the translation pipeline.
 					# this makes is more efficient bc it doesnt have to scan
@@ -44,10 +45,10 @@ class bot_translator(commands.Cog):
 		except TypeError as e:
 			print(e)
 		except NameError as ne:
-			await ctx.send('Invalid input!')
+			await ctx.send(embed=discord.Embed(description='Invalid input!'))
 			print(ne)
 		finally:
-			await ctx.send(en_translation)
+			await ctx.send(embed=discord.Embed(description=en_translation))
 
 	@commands.command()
 	async def ja(self, ctx, message):
@@ -57,10 +58,10 @@ class bot_translator(commands.Cog):
 		except TypeError as e:
 			print(e)
 		except NameError as ne:
-			await ctx.send('Invalid input!')
+			await ctx.send(embed=discord.Embed(description='Invalid input!'))
 			print(ne)
 		finally:
-			await ctx.send(ja_translation)
+			await ctx.send(embed=discord.Embed(description=ja_translation))
 
 	@commands.command()
 	async def nor(self, ctx, message):
@@ -70,10 +71,10 @@ class bot_translator(commands.Cog):
 		except TypeError as e:
 			print(e)
 		except NameError as ne:
-			await ctx.send('Invalid input!')
+			await ctx.send(embed=discord.Embed(description='Invalid input!'))
 			print(ne)
 		finally:
-			await ctx.send(nor_translation)
+			await ctx.send(embed=discord.Embed(description=nor_translation))
 
 def setup(bot):
 	bot.add_cog(bot_translator(bot))
