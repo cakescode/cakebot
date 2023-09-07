@@ -29,9 +29,9 @@ class rps(commands.Cog):
 		offense_wins = None
 		if offense == defense:
 			return 'Tie'
-		if offense == 'rock' and defense == 'paper':
-			offense_wins = False
-		if offense 
+		results = rps.possible_results[game_data]
+		print(f'results: {results}') # debug
+		return results
 
 	@commands.slash_command()
 	async def rps(self, ctx, message):
@@ -47,7 +47,16 @@ class rps(commands.Cog):
 			await ctx.send(embed=discord.Embed(
 				title='Rock Paper Scissors:',
 				description=f'<@{rps.contestants[1]}> has accepted a challenge by <@{rps.contestants[0]}>'))
-			
+			results = rps.rps_game(rps.choices[0], rps.choices[1])
+			if results == None:
+				winner = 'None'
+			if results:
+				winner = rps.contestants[0]
+
+			await ctx.send(embed=discord.Embed(
+				title='RPS Results:',
+				description=''
+			))
 			rps.contestants = []
 
 def setup(bot):

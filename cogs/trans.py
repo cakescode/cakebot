@@ -36,27 +36,37 @@ class googletrans_func(commands.Cog):
 				description=f'{translation.text}')
 			embed.set_footer(text=f'''
 translated from {detected_language}
-confidence: {confidence * 100}%''')
+auto detection confidence: {confidence * 100}%''')
 			await message.channel.send(embed=embed)
 		# if error, send error message to channel that caused it
 		except Exception as e:
 			await traceback(message.channel, e)
 
 	@commands.slash_command()
-	async def japanese(self, ctx, message):
+	async def translate(self, ctx, langauge, message):
 		try:
-			translator = Translator()
 			gl = googletrans.LANGUAGES
-			translated = translator.translate(message, dest='ja')
+			translator = Translator()
+			translated = translator.translate(message, dest=langauge)
 			embed = discord.Embed(
-				title=f'translation for "{message}"',
+				title=f'{message}:',
 				description=translated.text
 			)
-			embed.set_footer(text=f'translated from {gl[translated.dest]}')
+			embed.set_footer(text=f'translated from {gl[langauge]}')
 			await ctx.respond(embed=embed)
+		except ValueError as v:
+			languages = ''
+			for key, value in gl.items():
+				languages += f'{key}: \t{value}\n'
+			embed = discord.Embed(
+				title='Valid Language Codes:',
+				description=languages
+			)
+			embed.set_footer(text='''Please use the code on the left
+to select the language on the right''')
+			await ctx.send(embed=embed)
 		except Exception as e:
 			await traceback(ctx, e)
-		
 
 def setup(bot):
 	bot.add_cog(googletrans_func(bot))
