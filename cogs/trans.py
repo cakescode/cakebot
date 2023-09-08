@@ -1,5 +1,4 @@
-import discord.ext
-import googletrans
+import discord.ext, googletrans, random
 from discord.ext import commands
 from __main__ import traceback
 
@@ -10,9 +9,10 @@ def is_multi_lang(lang):
 class googletrans_func(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-		self.gl = googletrans.LANGUAGES
+		self.gl = googletrans.LANGUAGES # all supported langs in a dict
+		self.gl_rvs = {lang: code for code, lang in self.gl.items()} # reverse of self.gl
 		self.translator = googletrans.Translator()
-		self.THRESHOLD = 0.85
+		self.THRESHOLD = 0.85 # if confidence lower than this & not multi_lang then return
 		self.LANGUAGE = 'en' # print(googletrans.LANGUAGES) to get lang codes
 
 
@@ -26,10 +26,8 @@ class googletrans_func(commands.Cog):
 			multi_lang = is_multi_lang(lang)
 
 			# if LANGUAGE or within the confidence THRESHOLD of LANGUAGE then return
-			if lang == self.LANGUAGE or multi_lang and self.LANGUAGE in lang:
-				return
-			if detected.confidence < self.THRESHOLD and not multi_lang: 
-				return
+			if lang == self.LANGUAGE or multi_lang and self.LANGUAGE in lang: return
+			if detected.confidence < self.THRESHOLD and not multi_lang: return
 			
 			# if detection picks up 2 potential languages
 			if multi_lang:
@@ -45,7 +43,7 @@ class googletrans_func(commands.Cog):
 				if lang == 'zh-CN': lang = 'zh-cn'
 				detected_language = f'{self.gl[lang]}'
 
-			# translate message
+			# translate message to english
 			translation = self.translator.translate(message.content, dest=self.LANGUAGE)
 
 			# send results of translation as embed
@@ -56,29 +54,38 @@ class googletrans_func(commands.Cog):
 			await message.channel.send(embed=embed)
 
 		# if error, send error message to channel that caused it
-		except Exception as e:
-			await traceback(message.channel, e)
+		except Exception as e: await traceback(message.channel, e)
 
 
-	@commands.slash_command()
+	@commands.slash_command(description='Translate English to any Google supported language!')
 	async def translate(self, ctx, langauge, message):
+		translated = self.translator.translate(message, dest=self.gl_rvs[langauge.casefold()])
 		try:
-			translated = self.translator.translate(message, dest=langauge.lower())
 			embed = discord.Embed(title=f'{message}:', description=translated.text)
-			embed.set_footer(text=f'translated from {self.gl[langauge]}')
+			embed.set_footer(text=f'translated from {langauge}')
 			await ctx.respond(embed=embed)
 
 		except ValueError as v:
-			languages = ''
-			for key, value in gl.items():
-				languages += f'{key}: \t{value}\n'
-			embed = discord.Embed(title='Valid Language Codes:', description=languages)
-			embed.set_footer(text=('Please use the code on the left'
-				'\nto select the language on the right'))
+			embed = discord.Embed(title='Not a supported language!',
+				description='Please enter a supported language...')
+			embed.set_footer(text=('Type /languages to get a list of supported languages.'))
 			await ctx.send(embed=embed)
 
-		except Exception as e:
-			await traceback(ctx, e)
+		except Exception as e: await traceback(ctx, e)
+
+
+	@commands.slash_command()
+	async def languages(self, ctx):
+		languages = ''
+
+		for lang in self.gl.items(): languages += f'- {lang[1].title()}\n'
+
+		try: await ctx.respond(embed=discord.Embed(
+			title='Supported Languages:',
+			description=languages))
+			
+		except Exception as e: await traceback(ctx, e)
+
 
 def setup(bot):
 	bot.add_cog(googletrans_func(bot))
