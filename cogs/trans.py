@@ -51,11 +51,10 @@ class googletrans_func(commands.Cog):
 				description=f'{translation.text}')
 			embed.set_footer(text=(f'translated from {detected_language} to english'
 				f'\nauto detection confidence: {detected.confidence * 100}%'))
+			await message.channel.send(embed=embed)
 
 		# if error, send error message to channel that caused it
 		except Exception as e: await traceback(message.channel, e)
-
-		finally: await message.channel.send(embed=embed)
 
 
 	@commands.slash_command(description='Type /languages to get a list of supported languages.')
