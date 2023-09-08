@@ -49,7 +49,7 @@ class googletrans_func(commands.Cog):
 			# send results of translation as embed
 			embed = discord.Embed(title=f'{message.content}:',
 				description=f'{translation.text}')
-			embed.set_footer(text=(f'translated from {detected_language}'
+			embed.set_footer(text=(f'translated from {detected_language} to english'
 				f'\nauto detection confidence: {detected.confidence * 100}%'))
 			await message.channel.send(embed=embed)
 
@@ -57,32 +57,38 @@ class googletrans_func(commands.Cog):
 		except Exception as e: await traceback(message.channel, e)
 
 
-	@commands.slash_command(description='Translate English to any Google supported language!')
+	@commands.slash_command(description='Type /languages to get a list of supported languages.')
 	async def translate(self, ctx, langauge, message):
-		translated = self.translator.translate(message, dest=self.gl_rvs[langauge.casefold()])
+		if langauge.casefold() in ('chinese', 'chinese simplified'): langauge = 'chinese (simplified)'
+		elif langauge.casefold() in ('chinese traditional'): langauge = 'chinese (traditional)'
+		elif langauge.casefold() in ('kurdish', 'kurmanji'): langauge = 'kurdish (kurmanji)'
+		elif langauge.casefold() in ('myanmar', 'burmese'): langauge = 'myanmar (burmese)'
 		try:
+			translated = self.translator.translate(message, dest=self.gl_rvs[langauge.casefold()])
 			embed = discord.Embed(title=f'{message}:', description=translated.text)
-			embed.set_footer(text=f'translated from {langauge}')
-			await ctx.respond(embed=embed)
+			embed.set_footer(text=f'translated from english to {langauge}')
 
 		except ValueError as v:
 			embed = discord.Embed(title='Not a supported language!',
-				description='Please enter a supported language...')
+				description='Please enter a supported language.')
 			embed.set_footer(text=('Type /languages to get a list of supported languages.'))
 			await ctx.send(embed=embed)
 
 		except Exception as e: await traceback(ctx, e)
 
+		finally: await ctx.respond(embed=embed)
 
-	@commands.slash_command()
+
+	@commands.slash_command(description='All supported languages for /translate')
 	async def languages(self, ctx):
 		languages = ''
 
-		for lang in self.gl.items(): languages += f'- {lang[1].title()}\n'
+		for lang in self.gl.items(): languages += f'\n- {lang[1].title()}'
 
-		try: await ctx.respond(embed=discord.Embed(
-			title='Supported Languages:',
-			description=languages))
+		try:
+			embed = discord.Embed(title='Supported Languages:', description=languages)
+			embed.set_footer(text='Not case sensitive but must otherwise be entered as seen')
+			await ctx.respond(embed=embed)
 			
 		except Exception as e: await traceback(ctx, e)
 
