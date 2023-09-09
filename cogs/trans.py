@@ -23,7 +23,7 @@ class googletrans_func(commands.Cog):
 			multi_lang = isinstance(lang, list)
 
 			# if LANGUAGE or within the confidence THRESHOLD of LANGUAGE then return
-			if lang == self.LANGUAGE or multi_lang and self.LANGUAGE in lang: return
+			if lang in self.LANGUAGE: return
 			if detected.confidence < self.THRESHOLD and not multi_lang: return
 			
 			# if detection picks up 2 potential languages
