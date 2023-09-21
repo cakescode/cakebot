@@ -29,26 +29,25 @@ class googletrans_func(commands.Cog):
 			# if detection picks up 2 potential languages
 			if multi_lang:
 				# quick fix bc the self.gl keys dont match with API dict from detect()
-				for l in range(2):
-					if lang[l] == 'zh-CH': lang[l] = 'zh-ch'
+				for l in len(lang):
+					l = l.lower()
 				detected.confidence = detected.confidence[0] # extract value from list
 				detected_language = f'{self.gl[lang[0]]}/{self.gl[lang[1]]}' # for output
 
 			else:
-				if lang == 'zh-CN': lang = 'zh-cn'
+				lang = lang.lower()
 				detected_language = f'{self.gl[lang]}'
 
 			# translate message to english
 			translation = self.translator.translate(message.content, dest=self.LANGUAGE)
-			print(translation) # debug
-			if translation.pronunciation == None: pronunciation = ''
-			else: pronunciation = f'pronunciation: {translation.pronunciation}\n'
+			pronunciation = translation.extra_data['translation'][1:]
+			n = '\n'
 
 			# send results of translation as embed
 			embed = discord.Embed(title=f'{message.content}:',
-				description=f'{translation.text}')
-			embed.set_footer(text=(f'{pronunciation}'
-				f'translated from {detected_language} to english'
+				description=(f'{pronunciation[0][-1] + n if pronunciation else ""}'
+					f'"{translation.text}"'))
+			embed.set_footer(text=(f'translated from {detected_language} to english'
 				f'\nauto detection confidence: {detected.confidence * 100}%'))
 			await message.channel.send(embed=embed)
 
@@ -96,3 +95,5 @@ class googletrans_func(commands.Cog):
 
 def setup(bot):
 	bot.add_cog(googletrans_func(bot))
+
+# TODO: if output == input: return
