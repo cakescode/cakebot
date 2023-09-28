@@ -15,7 +15,7 @@ from discord.ext import commands, tasks
 prefix = '>'
 
 # This sets the prefix to use for commands. 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('>'),
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix),
                    intents=discord.Intents.all())
 
 async def traceback(ctx, e):

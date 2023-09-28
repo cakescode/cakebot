@@ -55,20 +55,26 @@ class googletrans_func(commands.Cog):
 		except Exception as e: await traceback(message.channel, e)
 
 
-	@commands.slash_command(description='Type /languages to get a list of supported languages.')
-	async def translate(self, ctx, langauge, message):
+	@commands.slash_command(description=('Example: `/translate from english to japanese hello world`'))
+	async def translate(self, ctx, _from, _to, message):
 		# initial checks
-		if langauge.casefold() in ('chinese', 'chinese simplified'): langauge = 'chinese (simplified)'
-		elif langauge.casefold() in ('chinese traditional'): langauge = 'chinese (traditional)'
-		elif langauge.casefold() in ('kurdish', 'kurmanji'): langauge = 'kurdish (kurmanji)'
-		elif langauge.casefold() in ('myanmar', 'burmese'): langauge = 'myanmar (burmese)'
+		checklist = (_from, _to)
+		for item in checklist:
+			if item.casefold() in ('chinese', 'chinese simplified'): item = 'chinese (simplified)'
+			elif item.casefold() in ('chinese traditional'): item = 'chinese (traditional)'
+			elif item.casefold() in ('kurdish', 'kurmanji'): item = 'kurdish (kurmanji)'
+			elif item.casefold() in ('myanmar', 'burmese'): item = 'myanmar (burmese)'
 
 		try:
-			translated = self.translator.translate(message, dest=self.gl_codes[langauge.casefold()])
-			embed = discord.Embed(title=f'{message}:', description=translated.text)
-			embed.set_footer(text=f'translated from english to {langauge}')
+			translation = self.translator.translate(message, dest=self.gl_codes[_to.casefold()])
+			pronunciation = translation.extra_data['translation'][1:]
+			n = '\n'
+			embed = discord.Embed(title=f'{message}:', description=(
+				f'{pronunciation[0][-1] + n if pronunciation else ""}'
+				f'"{translation.text}"'))
+			embed.set_footer(text=f'translated from {_from} to {_to}')
 
-		except ValueError as v:
+		except ValueError:
 			embed = discord.Embed(title='Not a supported language!',
 				description='Please enter a supported language.')
 			embed.set_footer(text=('Type /languages to get a list of supported languages.'))
