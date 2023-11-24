@@ -58,7 +58,7 @@ class googletrans_func(commands.Cog):
 
 		# translate message to english
 		translation = self.translator.translate(message.content, dest=self.LANGUAGE)
-		if str(translation.text).casefold() == message.content.casefold(): return # if translation == message, dont translate
+		if str(translation.text).casefold() == str(message.content).casefold(): return # if translation == message, dont translate
 		pronunciation = translation.extra_data['translation'][-1][::-1] # reverse list, most relevant data's usually at the end
 		for data in pronunciation:
 			if data and isinstance(data, str): 
@@ -84,10 +84,10 @@ class googletrans_func(commands.Cog):
 		# initial checks
 		checklist = (old, new)
 		for item in checklist:
-			if item.casefold() in ('chinese', 'chinese simplified'): item = 'chinese (simplified)'
-			elif item.casefold() in ('chinese traditional'): item = 'chinese (traditional)'
-			elif item.casefold() in ('kurdish', 'kurmanji'): item = 'kurdish (kurmanji)'
-			elif item.casefold() in ('myanmar', 'burmese'): item = 'myanmar (burmese)'
+			if str(item).casefold() in ('chinese', 'chinese simplified'): item = 'chinese (simplified)'
+			elif str(item).casefold() in ('chinese traditional'): item = 'chinese (traditional)'
+			elif str(item).casefold() in ('kurdish', 'kurmanji'): item = 'kurdish (kurmanji)'
+			elif str(item).casefold() in ('myanmar', 'burmese'): item = 'myanmar (burmese)'
 
 		try:
 			translation = self.translator.translate(message, dest=self.gl_codes[new.casefold()])
