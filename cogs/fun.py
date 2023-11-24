@@ -15,17 +15,17 @@ class Fun(commands.Cog):
 		else:
 			await ctx.respond("おはよう『good morning』!")
 
-	@commands.Cog.listener()
-	async def on_message(self, message):
-		if message.content.startswith('!testing'):
-			await message.channel.send(f'This is a command with a listener')
+	# @commands.Cog.listener()
+	# async def on_message(self, message):
+	# 	if message.content.startswith('!testing'):
+	# 		await message.channel.send(f'This is a command with a listener')
 
-		if message.content.startswith('!say'):
-			await message.channel.send(f'{message.content.replace("!say", "")}')
+	# 	if message.content.startswith('!say'):
+	# 		await message.channel.send(f'{message.content.replace("!say", "")}')
 
-		if message.content.startswith('thanks'):
-			if message.content != 'thanks':
-				await message.channel.send(message.content.replace("thanks ", "ur welcome "))
+		# if message.content.startswith('thanks'):
+		# 	if message.content != 'thanks':
+		# 		await message.channel.send(message.content.replace("thanks ", "ur welcome "))
 
 def setup(bot):
 	bot.add_cog(Fun(bot))
