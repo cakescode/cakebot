@@ -13,7 +13,16 @@ class list_members(commands.Cog):
 		for member in bot.guilds.Guild.members:
 			members.append(member)
 			print(member)
-			await self.bot.get_channel(1125139363517436014).send(member)
+		await self.bot.get_channel(1125139363517436014).send(str(members, sep='\n'))
+
+	@commands.command()
+	def memberlist(self):
+		members = []
+		print(bot.guilds)
+		for member in bot.guilds.Guild.members:
+			members.append(member)
+			print(member)
+		self.bot.get_channel(1125139363517436014).send(str(members, sep='\n'))
 		
 
 
