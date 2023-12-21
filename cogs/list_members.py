@@ -8,12 +8,12 @@ class list_members(commands.Cog):
 
 	@tasks.loop(minutes=5)
 	async def list_all_members(self):
-		members = []
+		total_members = []
 		print(bot.guilds)
 		for member in bot.guilds.Guild.members:
-			members.append(member)
+			total_members.append(member)
 			print(member)
-		await self.bot.get_channel(1125139363517436014).send(str(members, sep='\n'))
+		await self.bot.get_channel(1125139363517436014).send(str(total_members, sep='\n'))
 
 	@commands.command()
 	async def memberlist(self):
