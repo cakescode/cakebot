@@ -16,7 +16,7 @@ class list_members(commands.Cog):
 		await self.bot.get_channel(1125139363517436014).send(str(members, sep='\n'))
 
 	@commands.command()
-	def memberlist(self):
+	async def memberlist(self):
 		members = []
 		print(bot.guilds)
 		for member in bot.guilds.Guild.members:
